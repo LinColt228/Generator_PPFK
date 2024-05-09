@@ -1,39 +1,3 @@
-<?php
-// Підключення до бази даних
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "test1base";
-
-// Створення з'єднання
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Перевірка з'єднання
-if ($conn->connect_error) {
-    die("Помилка підключення до бази даних: " . $conn->connect_error);
-}
-
-// Отримання даних з форми реєстрації
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $phone = $_POST['phone'];
-    $username = $_POST['username'];
-    $password = md5($_POST['password']); // Рекомендується хешувати пароль перед збереженням у базу даних
-
-    // Вставка даних у таблицю користувачів
-    $sql = "INSERT INTO users (email, phone, login, pass) VALUES ('$email', '$phone', '$username', '$password')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Користувач успішно зареєстрований!";
-    } else {
-        echo "Помилка: " . $sql . "<br>" . $conn->error;
-    }
-}
-
-// Закриття з'єднання з базою даних
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +34,7 @@ $conn->close();
             color: #1E1E1E;
             border-radius: 5px;
         }
-        /* Стилі для форми */
+		/* Стилі для форми */
         body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
@@ -125,22 +89,14 @@ $conn->close();
 <nav>
         <ul>
             <li><a href="index.html">Головна</a></li>
-            <!-- Показувати посилання на реєстрацію та вхід тільки якщо користувач не авторизований -->
-            {% if not session.logged_in %}
-            <li><a href="register.html">Регестрація</a></li>
+            <li><a href="register.html">Реєстрація</a></li>
             <li><a href="login.html">Вхід</a></li>
-            {% endif %}
-            <!-- Показувати посилання на вихід тільки якщо користувач авторизований -->
-            {% if session.logged_in %}
-            <li><a href="create direction.html">Стоврити напрямок</a></li>
-            {% endif %}
-            <!-- Додайте інші посилання на ваш вміст тут -->
         </ul>
     </nav>
 
 <div class="container">
     <h2>Registration</h2>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+    <form action="/register" method="POST">
         <label for="email">Email:</label><br>
         <input type="email" id="email" name="email" required><br>
         <label for="phone">Phone:</label><br>
@@ -154,7 +110,41 @@ $conn->close();
         <input type="submit" value="Register">
         <!-- Доданий блок для відображення повідомлення про помилку -->
     </form>
+
+    <?php
+    // Параметри підключення до бази даних
+    $servername = "localhost";
+    $username = "your_username";
+    $password = "your_password";
+    $dbname = "generator";
+
+    // Створення з'єднання
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Перевірка з'єднання
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Приклад вибірки даних з бази даних
+    $sql = "SELECT * FROM users";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // виводимо дані кожного рядка
+        while($row = $result->fetch_assoc()) {
+            echo "login: " . $row["login"]. " - email: " . $row["email"]. " - number: " . $row["number"]. "<br>";
+        }
+    } else {
+        echo "0 results";
+    }
+    $conn->close();
+    ?>
 </div>
+
+</body>
+</html>
+
 
 </body>
 </html>
