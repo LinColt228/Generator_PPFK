@@ -1,8 +1,8 @@
 <?php
 // Підключення до бази даних
 $servername = "localhost";
-$username = "your_username";
-$password = "your_password";
+$username = "root";
+$password = "root";
 $dbname = "test1base";
 
 // Створення з'єднання
