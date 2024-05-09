@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+       /* Стилі для навігаційного меню */
+        nav {
+            background-color: #1E1E1E;
+            overflow: hidden;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        nav ul li {
+            float: left;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            display: block;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        nav ul li a:hover {
+            background-color: #FFFFFF;
+            color: #1E1E1E;
+            border-radius: 5px;
+        }
+		/* Стилі для форми */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            width: 300px;
+            margin: 100px auto;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<nav>
+        <ul>
+            <li><a href="index.html">Головна</a></li>
+            <!-- Показувати посилання на реєстрацію та вхід тільки якщо користувач не авторизований -->
+            {% if not session.logged_in %}
+            <li><a href="register.html">Регестрація</a></li>
+            <li><a href="login.html">Вхід</a></li>
+            {% endif %}
+            <!-- Показувати посилання на вихід тільки якщо користувач авторизований -->
+            {% if session.logged_in %}
+            <li><a href="create direction.html">Стоврити напрямок</a></li>
+            {% endif %}
+            <!-- Додайте інші посилання на ваш вміст тут -->
+        </ul>
+    </nav>
+<div class="container">
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <input type="submit" value="Login">
+    </form>
+</div>
+
+</body>
+</html>
